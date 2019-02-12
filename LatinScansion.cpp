@@ -2,6 +2,10 @@
 // Created by Peter Koncelik on 2019-02-08.
 //
 
+
+#ifndef LATINSCANSION_LATINSCANSION_CPP
+#define LATINSCANSION_LATINSCANSION_CPP
+
 #include "LatinScansion.h"
 
 
@@ -20,13 +24,45 @@ LatinScan::LatinScan(std::string scanLine) : myHead(nullptr), mySize(scanLine.le
         }
         else {
             curr->character = scanLine[i];
-            curr->meter = '0'; // default value of 0 for unassigned meter
+            curr->meter = ' '; // default value of 0 for unassigned meter
             curr->nextLetter = myHead;
 
             myHead = curr;
             mySize++;
         }
     }
+}
+
+// RUNS INFINITELY: CHECK REVERSAL ON PAPER
+LatinScan LatinScan::reverseLine() {
+
+    LatinScan revObject;
+
+    for (letterPtr q = myHead; q != nullptr; q = q->nextLetter) {
+        letterPtr add(new letter);
+
+        add->character = q->character;
+        add->meter = q->meter;
+        add->nextLetter = revObject.myHead;
+
+        revObject.myHead = add;
+    }
+    return revObject;
+}
+
+void LatinScan::printLine() {
+
+    for (letterPtr a = myHead; a != nullptr; a = a->nextLetter) {
+        std::cout << a->character;
+    }
+    std::cout << std::endl;
+}
+
+void LatinScan::printMeter() {
+    for (letterPtr a = myHead; a != nullptr; a = a->nextLetter) {
+        std::cout << a->meter;
+    }
+    std::cout << std::endl;
 }
 
 void LatinScan::elision() {
@@ -37,13 +73,9 @@ void LatinScan::elision() {
 
         if (cur->character == ' ') {
 
-            if (pre->character == 'a' || pre->character == 'e' || pre->character == 'i' ||
-        pre->character == 'o' || pre->character ==  'u' || pre->character == 'y') {
+            if (checkVowel(pre)) {
 
-                if (cur->nextLetter->character == 'a' || cur->nextLetter->character == 'e' ||
-                    cur->nextLetter->character == 'i' || cur->nextLetter->character == 'o' ||
-                    cur->nextLetter->character == 'u' || cur->nextLetter->character == 'y' ||
-                    cur->nextLetter->character == 'h') {
+                if (checkVowel(cur->nextLetter) || cur->nextLetter->character == 'h') {
 
                     pass->nextLetter = pre->nextLetter;
                     mySize--;
@@ -65,3 +97,72 @@ void LatinScan::trimSpace() {
         }
     }
 }
+
+void LatinScan::initialMark() {
+    for (letterPtr a = myHead; a != nullptr; a = a->nextLetter) {
+
+        if (checkVowel(a)) {
+            a->meter = '-';
+            break;
+        }
+    }
+
+    LatinScan initial = reverseLine(); // reverses the line for easier initial assignment
+
+    int countS = 0;
+
+    letterPtr b;
+
+    // Loop assigns final Spondee
+    // NOTE: ADD PREV POINTER
+    for (b = initial.myHead; b != nullptr; b = b->nextLetter) {
+
+        if (checkVowel(b)) {
+
+                b->meter = '-';
+                countS++;
+    }
+        if (countS == 2) {
+            break; // stops process after assigning final foot
+        }
+    }
+
+    // Loop assigns 5th-foot Dactyl
+    letterPtr c;
+    int countD = 0;
+
+    for (c = b->nextLetter; c != nullptr; c = c->nextLetter) {
+
+        if (checkVowel(c)) {
+
+            // checks for consonantal -qu
+            if (c->nextLetter->character != 'q') {
+
+                if (countD < 2) {
+                    c->meter = 'u';
+                    countD++;
+                    continue;
+                }
+                if (countD ==2) {
+                    c->meter = '-';
+                    break;
+                }
+            }
+        }
+    }
+
+
+    LatinScan post = initial.reverseLine();
+
+    post.printLine();
+    post.printMeter();
+
+}
+
+// boolean helper method
+bool LatinScan::checkVowel(letterPtr c) {
+    return (c->character == 'a' || c->character ==  'e' || c->character ==  'i' ||
+           c->character ==  'o' || c->character ==  'u' || c->character ==  'y');
+}
+
+#endif //LATINSCANSION_LATINSCANSION_CPP
