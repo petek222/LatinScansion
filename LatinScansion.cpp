@@ -8,8 +8,8 @@
 
 #include "LatinScansion.h"
 
-
 LatinScan::LatinScan() : myHead(nullptr) {
+
     // initializes diphthong set with proper values
     diphthongs.insert("ae");
     diphthongs.insert("oe");
@@ -39,7 +39,6 @@ LatinScan::LatinScan(std::string scanLine) : myHead(nullptr), mySize(scanLine.le
     }
 }
 
-// RUNS INFINITELY: CHECK REVERSAL ON PAPER
 LatinScan LatinScan::reverseLine() {
 
     LatinScan revObject;
@@ -80,16 +79,29 @@ void LatinScan::elision() {
 
     letterPtr pre, cur, pass;
 
-    for (pass = myHead, pre = myHead, cur = myHead; cur != nullptr; pass = pre, pre = cur, cur = cur->nextLetter) {
+    for (pass = myHead, pre = myHead, cur = myHead; cur != nullptr; pass = pre, pre = cur,
+            cur = cur->nextLetter) {
+
+        char mEnd[2];
+        mEnd[0] = pass->character;
+        mEnd[1] = pre->character;
+
+        std::string finalUM;
+        finalUM+=mEnd[0];
+        finalUM+=mEnd[1];
 
         if (cur->character == ' ') {
 
-            if (checkVowel(pre)) {
+            if (checkVowel(pre) || finalUM == "um") {
 
                 if (checkVowel(cur->nextLetter) || cur->nextLetter->character == 'h') {
 
                     pass->nextLetter = pre->nextLetter;
                     mySize--;
+
+                    if (finalUM == "um") {
+                        pass->meter = '/';
+                    }
                 }
             }
         }
@@ -100,7 +112,8 @@ void LatinScan::trimSpace() {
 
     letterPtr prev2, curr2;
 
-    for (prev2 = myHead, curr2 = myHead; curr2 != nullptr; prev2 = curr2, curr2 = curr2->nextLetter) {
+    for (prev2 = myHead, curr2 = myHead; curr2 != nullptr; prev2 = curr2, curr2 = curr2->nextLetter)
+    {
 
         if (curr2->character == ' ') {
             prev2->nextLetter = curr2->nextLetter;
@@ -112,7 +125,7 @@ void LatinScan::trimSpace() {
 LatinScan LatinScan::initialMark() {
     for (letterPtr a = myHead; a != nullptr; a = a->nextLetter) {
 
-        if (checkVowel(a)) {
+        if (checkVowel(a) && a->meter != '/') {
             a->meter = '-';
             break;
         }
@@ -125,10 +138,9 @@ LatinScan LatinScan::initialMark() {
     letterPtr b;
 
     // Loop assigns final Spondee
-    // NOTE: ADD PREV POINTER
     for (b = initial.myHead; b != nullptr; b = b->nextLetter) {
 
-        if (checkVowel(b)) {
+        if (checkVowel(b) && b->meter != '/') {
 
             if (b->nextLetter->character != 'q') {
 
@@ -145,9 +157,10 @@ LatinScan LatinScan::initialMark() {
     letterPtr c;
     int countD = 0;
 
+    // Try/Catch block for null reference?: "This is not a proper line of dactylic hexameter"
     for (c = b->nextLetter; c != nullptr; c = c->nextLetter) {
 
-        if (checkVowel(c)) {
+        if (checkVowel(c) && c->meter != '/') {
 
             // checks for consonantal -qu
             if (c->nextLetter->character != 'q') {
@@ -165,23 +178,24 @@ LatinScan LatinScan::initialMark() {
         }
     }
 
-
     LatinScan post = initial.reverseLine();
 
     post.markDiphthongs(); // Call down hierarchy to markDipthongs method
 
-    post.printLine();
     post.printMeter();
+    post.printLine();
 
     return post;
 }
 
 LatinScan LatinScan::markDiphthongs() {
 
+    letterPtr qCheck; // ensures qu is counted as consonant (e. qui is NOT a diphthong)
     letterPtr first;
     letterPtr second;
 
-    for (first = myHead, second = myHead->nextLetter; second != nullptr; first = second, second = second->nextLetter) {
+    for (qCheck = myHead, first = myHead, second = myHead->nextLetter; second != nullptr;
+    qCheck = first, first = second, second = second->nextLetter) {
 
         char concat[2];
         concat[0] = first->character;
@@ -193,9 +207,10 @@ LatinScan LatinScan::markDiphthongs() {
 
         std::string checkDiph = concatenate;
 
-        if (diphthongs.find(checkDiph) != diphthongs.end()) {
+        if (diphthongs.find(checkDiph) != diphthongs.end() && qCheck->character != 'q' && first->meter != '/') {
             first->meter = '-';
-            second->meter = '/'; // NOTE: slash indicates it has been referenced, but does not get a meter assignment
+            second->meter = '/'; // NOTE: slash indicates it has been referenced,
+                                 // but does not get a meter assignment
         }
     }
 
@@ -212,9 +227,26 @@ LatinScan LatinScan::markDoubleConsonants() {
 
         if (checkVowel(pre) && now->nextLetter != nullptr) {
 
-            if (!checkVowel(now) && !checkVowel(now->nextLetter)) {
+            if (!checkVowel(now) && !checkVowel(now->nextLetter) && now->meter != '/') {
                 pre->meter = '-';
             }
+        }
+    }
+
+    markRemainder();
+
+    return *this;
+}
+
+//// REFINE/UPDATE USING feetCount private var: Maybe offload meter into another linked list?
+LatinScan LatinScan::markRemainder() {
+    letterPtr rem;
+    letterPtr qCheck;
+
+    for ( qCheck = myHead, rem = myHead; rem != nullptr; qCheck = rem, rem=rem->nextLetter) {
+        if (checkVowel(rem) && rem->meter != '-' && rem->meter != 'u' && rem->meter != '/'
+        && qCheck->character != 'q') {
+            rem->meter = 'u';
         }
     }
     return *this;

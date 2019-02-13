@@ -9,7 +9,7 @@
 
 int main() {
 
-    LatinScan check("arma virumque cano troiae qui primus ab oris");
+    LatinScan check("litora multum ille et terris iactatus et alto");
 
     check.elision();
 
