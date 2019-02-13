@@ -23,11 +23,9 @@ negligable), the 5th as a dactyl (rarity of 5th-foot spondee is minute), and the
 
 3.) All diphthongs and double-consonantal vowels marked as long. DONE
 
-4.) Inflected endings based on declensions 1-5 of Latin marked as best as is possible.
-    Note: While this will nearly always work, occasional declension data may be misread: in which case a Latin declension       
-    summary and seperate dictionary will be linked. 
+4.) Inflected endings based on declensions 1-5 of Latin marked as best as is possible. This will be done via a footCount, optimization algorithm (TBD). 
 
-5.) Filling in the remaining syllable metrics as fits the dactylic meter progression. 
+5.) Filling in the remaining syllable metrics as fits the dactylic meter progression. (Tied in with process of #4)
 
 The result will be a fully-scanned line of dactylic hexameter Latin Verse. 
 Note: Addition of Main Caesura may be added after full scansion dev is finished. 
@@ -36,7 +34,7 @@ The provided files include .h and .cpp files for the LatinScansion class that wi
 LatinScansionDriver.cpp that will maintain a main execution branch for the class.
 
 The ambition is to eventually implement this into an iOS app using Objective-C/Swift for the
-app store, for greater consumption and use in high-school Latin courses. If you are interested in contributing to this project, contact me. Also feel free to pull/push code as desired if you write
+app store, for greater consumption and use in high-school Latin courses. The Application will also hopefully include declension/verbal conjugation references, and a step-by-step output of scansion process for better instruction. If you are interested in contributing to this project, contact me. Also feel free to pull/push code as desired if you write
 something that could help.
 
 “forsan et haec olim meminisse iuvabit." -Vergil 
