@@ -10,6 +10,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <set>
+#include <cmath>
 
 
 struct letter {
@@ -25,15 +27,13 @@ class LatinScan {
 
 public:
 
-    //std::find!!!!!
-    std::vector<char> vowel = {'a','e','i','o','u','y'};
-    std::vector<std::string> diphthong = {"ae","oe","au","ei","eu","ui"};
+    // Other data structure like set? or just another helper method for diphthongs?
+    std::set<std::string> diphthongs;
 
     LatinScan();
 
     LatinScan(std::string scanLine);
 
-    // RUNS INFINITELY: CHECK REVERSAL ON PAPER
     LatinScan reverseLine(); // helper method will make initial assignment easier
 
     void printLine();
@@ -44,14 +44,24 @@ public:
 
     void trimSpace();
 
-    void initialMark();
+    LatinScan initialMark();
+
+    LatinScan markDiphthongs();
+
+    LatinScan markDoubleConsonants();
 
     // GENERAL LOGIC PROCESS OF DEVELOPMENT:
     // 1.) will assign initial meters within linked list: (DONE)
     // ie. 5th and 6th feet, long syllable on first vowel (DONE) 
-    // 2.) Mark diphthongs and double-consonant vowels as long
+    // 2.) Mark diphthongs and double-consonant vowels as long (DONE)
     // 3.) Mark inflected endings as best as possible (see handout back)
     // 4.) Fill in the rest (trickiest)
+    // 5.) Write in user-inuput function.
+
+
+    // NOTE 1: HAVE A METHOD GO THROUGH AND MARK OFF ALL QU COMBOS AS CONSONANTS OR SOMETHING
+    // NOTE 2: HAVE A METHOD ACCOUNT FOR CAPITALIZATION AND PUNCTUATION (ie. periods, commas,
+    // colons, quotation marks, single quotes, etc.)
 
 
     // NOTE: For marking diphthongs, mark first vowel as long and put another placeholder for the second

@@ -10,7 +10,13 @@
 
 
 LatinScan::LatinScan() : myHead(nullptr) {
-    // nothing to do
+    // initializes diphthong set with proper values
+    diphthongs.insert("ae");
+    diphthongs.insert("oe");
+    diphthongs.insert("au");
+    diphthongs.insert("ei");
+    diphthongs.insert("eu");
+    diphthongs.insert("ui");
 }
 
 LatinScan::LatinScan(std::string scanLine) : myHead(nullptr), mySize(scanLine.length()) {
@@ -60,7 +66,12 @@ void LatinScan::printLine() {
 
 void LatinScan::printMeter() {
     for (letterPtr a = myHead; a != nullptr; a = a->nextLetter) {
-        std::cout << a->meter;
+        if (a->meter == '/') {
+            std::cout << " ";
+        }
+        else {
+            std::cout << a->meter;
+        }
     }
     std::cout << std::endl;
 }
@@ -98,7 +109,7 @@ void LatinScan::trimSpace() {
     }
 }
 
-void LatinScan::initialMark() {
+LatinScan LatinScan::initialMark() {
     for (letterPtr a = myHead; a != nullptr; a = a->nextLetter) {
 
         if (checkVowel(a)) {
@@ -119,8 +130,11 @@ void LatinScan::initialMark() {
 
         if (checkVowel(b)) {
 
+            if (b->nextLetter->character != 'q') {
+
                 b->meter = '-';
                 countS++;
+            }
     }
         if (countS == 2) {
             break; // stops process after assigning final foot
@@ -154,9 +168,56 @@ void LatinScan::initialMark() {
 
     LatinScan post = initial.reverseLine();
 
+    post.markDiphthongs(); // Call down hierarchy to markDipthongs method
+
     post.printLine();
     post.printMeter();
 
+    return post;
+}
+
+LatinScan LatinScan::markDiphthongs() {
+
+    letterPtr first;
+    letterPtr second;
+
+    for (first = myHead, second = myHead->nextLetter; second != nullptr; first = second, second = second->nextLetter) {
+
+        char concat[2];
+        concat[0] = first->character;
+        concat[1] = second->character;
+
+        std::string concatenate;
+        concatenate+=concat[0];
+        concatenate+=concat[1];
+
+        std::string checkDiph = concatenate;
+
+        if (diphthongs.find(checkDiph) != diphthongs.end()) {
+            first->meter = '-';
+            second->meter = '/'; // NOTE: slash indicates it has been referenced, but does not get a meter assignment
+        }
+    }
+
+    markDoubleConsonants(); // call down the hierarchy to markDoubleConsonants
+
+    return *this;
+}
+
+LatinScan LatinScan::markDoubleConsonants() {
+    letterPtr pre;
+    letterPtr now;
+
+    for (pre = myHead, now = myHead; now != nullptr; pre = now, now = now->nextLetter) {
+
+        if (checkVowel(pre) && now->nextLetter != nullptr) {
+
+            if (!checkVowel(now) && !checkVowel(now->nextLetter)) {
+                pre->meter = '-';
+            }
+        }
+    }
+    return *this;
 }
 
 // boolean helper method

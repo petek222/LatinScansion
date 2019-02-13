@@ -9,24 +9,19 @@
 
 int main() {
 
-    LatinScan check("arma eirumque yano");
+    LatinScan check("arma virumque cano troiae qui primus ab oris");
 
     check.elision();
 
     check.trimSpace();
 
-    //check.printLine();
-
     std::cout << std::endl;
 
     check.initialMark();
 
-    //check.printMeter();
+    check.markDiphthongs();
 
-    LatinScan rev = check.reverseLine();
-
-    // printline function prints infinitely: error in reverseLine
-    //rev.printLine();
+    // Print statements are currently housed in method-call hierarchy
 
     return 0;
 }
