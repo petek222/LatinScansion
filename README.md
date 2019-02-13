@@ -23,7 +23,9 @@ negligable), the 5th as a dactyl (rarity of 5th-foot spondee is minute), and the
 
 3.) All diphthongs and double-consonantal vowels marked as long. DONE
 
-4.) Inflected endings based on declensions 1-5 of Latin marked as specified. 
+4.) Inflected endings based on declensions 1-5 of Latin marked as best as is possible.
+    Note: While this will nearly always work, occasional declension data may be misread: in which case a Latin declension       
+    summary and seperate dictionary will be linked. 
 
 5.) Filling in the remaining syllable metrics as fits the dactylic meter progression. 
 
