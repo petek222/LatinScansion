@@ -16,12 +16,12 @@ A.) DACTYLS ( - ˘	˘), or long-short-short
 B.) SPONDEES (- -), or long-long
 
 1.) All elisions will be marked and taken care of (not that the rare device of hiatus is not accounted for in this current 
-software implemenation). 
+software implemenation). DONE
 
 2.) Of the six metrical feet, two will be promptly marked (the 6th as a spondee (long-long or long-short, but difference is 
-negligable), the 5th as a dactyl (rarity of 5th-foot spondee is minute), and the first syllable as a long.) 
+negligable), the 5th as a dactyl (rarity of 5th-foot spondee is minute), and the first syllable as a long.) DONE
 
-3.) All diphthongs and double-consonantal vowels marked as long. 
+3.) All diphthongs and double-consonantal vowels marked as long. DONE
 
 4.) Inflected endings based on declensions 1-5 of Latin marked as specified. 
 
