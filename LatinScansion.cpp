@@ -230,10 +230,13 @@ LatinScan LatinScan::markDoubleConsonants() {
             if (!checkVowel(now) && !checkVowel(now->nextLetter) && now->meter != '/') {
                 pre->meter = '-';
             }
+            else if (now->character == 'x') {
+                pre->meter = '-';
+            }
         }
     }
 
-    markRemainder();
+    markRemainder(); // call to markRemainder() function
 
     return *this;
 }
@@ -243,11 +246,32 @@ LatinScan LatinScan::markRemainder() {
     letterPtr rem;
     letterPtr qCheck;
 
+
+
+    // Embedded Loop Function Scans down the next vowels and checks meters, filling in as needed
+    // IN DEV: NOT COMPLETE: COMMENTED OUT CODE IS PROGRESS, CURRENT IMP MAKES COMPILER
+
     for ( qCheck = myHead, rem = myHead; rem != nullptr; qCheck = rem, rem=rem->nextLetter) {
+
+//        if ((checkVowel(rem) && rem->meter != '-' && rem->meter != 'u' && rem->meter != '/') {
+//
+//            for (letterPtr secCheck = qCheck; secCheck != nullptr; secCheck = secCheck->nextLetter) {
+//
+//                if (checkVowel(secCheck)  && secCheck->meter != '-' && secCheck->meter != 'u' && secCheck->meter != '/') {
+//
+//                    for (letterPtr thirCheck = qCheck; thirCheck != nullptr; thirCheck = thirCheck->nextLetter) {
+//
+//                        if ()
+//
+//                    }
+//            }
+//        }
+
         if (checkVowel(rem) && rem->meter != '-' && rem->meter != 'u' && rem->meter != '/'
         && qCheck->character != 'q') {
             rem->meter = 'u';
         }
+
     }
     return *this;
 }

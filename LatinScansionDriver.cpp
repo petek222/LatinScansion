@@ -9,7 +9,7 @@
 
 int main() {
 
-    LatinScan check("litora multum ille et terris iactatus et alto");
+    LatinScan check("urbs antiqua fuit tyrii tenuere coloni");
 
     check.elision();
 

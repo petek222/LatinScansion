@@ -80,7 +80,7 @@ private:
     letter *myHead;
     int mySize;
 
-    int feetCount; ////THIS PRIVATE VARIABLE WILL BE CRITICAL FOR FINAL FILL-IN
+    //int feetCount; ////THIS PRIVATE VARIABLE WILL BE CRITICAL FOR FINAL FILL-IN
 
     bool checkVowel(letterPtr c); // helper method checks for vowel
 
