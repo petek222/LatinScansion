@@ -242,6 +242,7 @@ LatinScan LatinScan::markDoubleConsonants() {
 }
 
 //// REFINE/UPDATE USING feetCount private var: Maybe offload meter into another linked list?
+//// Possibly use an array for tracking meter instead?
 LatinScan LatinScan::markRemainder() {
     letterPtr rem;
     letterPtr qCheck;
