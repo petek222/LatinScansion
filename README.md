@@ -33,7 +33,7 @@ Note: Addition of Main Caesura may be added after full scansion dev is finished.
 The provided files include .h and .cpp files for the LatinScansion class that will be performing the scansion, as well as a
 LatinScansionDriver.cpp that will maintain a main execution branch for the class.
 
-The ambition is to eventually implement this into an iOS app using Objective-C/Swift for the
+The ambition is to eventually implement this into an iOS app using Swift for the
 app store, for greater consumption and use in high-school Latin courses. The Application will also hopefully include declension/verbal conjugation references, and a step-by-step output of scansion process for better instruction. If you are interested in contributing to this project, contact me. Also feel free to pull/push code as desired if you write
 something that could help.
 
