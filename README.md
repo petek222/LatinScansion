@@ -1,5 +1,5 @@
 # LatinScansion
-In-Development Application to scan Meter of Classical Latin Poetry (Dactylic Hexameter)
+Application to scan Meter of Classical Latin Poetry (Dactylic Hexameter)
 
 This program will allow the user to input a line of Latin Poetry, whose metrical pattern follows Dactlyic Hexameter 
 (Although the selectivity of this meter will expand as development progresses.) 
@@ -16,14 +16,14 @@ A.) DACTYLS ( - ˘	˘), or long-short-short
 B.) SPONDEES (- -), or long-long
 
 1.) All elisions will be marked and taken care of (not that the rare device of hiatus is not accounted for in this current 
-software implemenation). DONE
+software implemenation). 
 
 2.) Of the six metrical feet, two will be promptly marked (the 6th as a spondee (long-long or long-short, but difference is 
-negligable), the 5th as a dactyl (rarity of 5th-foot spondee is minute), and the first syllable as a long.) DONE
+negligable), the 5th as a dactyl (rarity of 5th-foot spondee is minute), and the first syllable as a long.) 
 
-3.) All diphthongs and double-consonantal vowels marked as long. DONE
+3.) All diphthongs and double-consonantal vowels marked as long. 
 
-4.) Inflected endings based on declensions 1-5 of Latin marked as best as is possible. This will be done via a footCount, optimization algorithm (TBD). 
+4.) Inflected endings based on declensions 1-5 of Latin marked as best as is possible. This will be done via a footCount, optimization algorithm (TBD). Currently assigns fill in based on best guess in tandem with step 5.
 
 5.) Filling in the remaining syllable metrics as fits the dactylic meter progression. (Tied in with process of #4)
 
@@ -33,7 +33,7 @@ Note: Addition of Main Caesura may be added after full scansion dev is finished.
 The provided files include .h and .cpp files for the LatinScansion class that will be performing the scansion, as well as a
 LatinScansionDriver.cpp that will maintain a main execution branch for the class.
 
-The ambition is to eventually implement this into an iOS app using Objective-C/Swift for the
+The ambition is to eventually implement this into an iOS app using Swift for the
 app store, for greater consumption and use in high-school Latin courses. The Application will also hopefully include declension/verbal conjugation references, and a step-by-step output of scansion process for better instruction. If you are interested in contributing to this project, contact me. Also feel free to pull/push code as desired if you write
 something that could help.
 
