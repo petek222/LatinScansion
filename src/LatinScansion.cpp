@@ -250,9 +250,10 @@ LatinScan LatinScan::markRemainder() {
 
 
     // Embedded Loop Function Scans down the next vowels and checks meters, filling in as needed
-    // IN DEV: NOT COMPLETE: COMMENTED OUT CODE IS PROGRESS, CURRENT IMP MAKES COMPILER
 
     for ( qCheck = myHead, rem = myHead; rem != nullptr; qCheck = rem, rem=rem->nextLetter) {
+
+        // TODO
 
 //        if ((checkVowel(rem) && rem->meter != '-' && rem->meter != 'u' && rem->meter != '/') {
 //
