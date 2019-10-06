@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/peterkoncelik/Desktop/SideProjects/LatinScansion/LatinScansion.cpp
+LatinScansion.h
+/Users/peterkoncelik/Desktop/SideProjects/LatinScansion/LatinScansion.h
+
+/Users/peterkoncelik/Desktop/SideProjects/LatinScansion/LatinScansion.h
+cstddef
+-
+iostream
+-
+fstream
+-
+string
+-
+vector
+-
+set
+-
+cmath
+-
+
+/Users/peterkoncelik/Desktop/SideProjects/LatinScansion/LatinScansionDriver.cpp
+iostream
+-
+LatinScansion.h
+/Users/peterkoncelik/Desktop/SideProjects/LatinScansion/LatinScansion.h
+
